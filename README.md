@@ -10,7 +10,9 @@ Flight mapping tool is in early development and may have bugs. Access by clickin
 - **Split Application into tabs. Landing Inspector and the new Flight Mapper
 - **Added Flight Mapping functionality
 - **TODO Implement flight track and ability to save flight track ask KML/CSV/etc
-Screenshot of MSFS Landing Inspector in action:
+
+**Screenshot of MSFS Flight Mapper in action:
+
 ![](images/Mapping_Tab.png)
 
 ## October 1, 2020: Update Version 1.1:
