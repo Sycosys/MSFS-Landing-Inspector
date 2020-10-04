@@ -1,5 +1,19 @@
-# MSFS Landing Inspector
+# Flight Mapping Fork of MSFS Landing Inspector
+
+## MSFS Landing Inspector + Flight Mapping Tool
 MSFS Landing Inspector is a tool for analyzing landings in Microsoft Flight Simulator 2020. It reads the airplane’s telemetry data via SimConnect and displays relevant information about your landing in a web browser. The MSFS Landing Inspector is free to use.
+
+Flight mapping tool is in early development and may have bugs. Access by clicking the flight mapping tab at top of localhost:5000 page. 
+
+## October 3, 2020: Mapping Fork Version 1.1
+- **Added Start.bat file to project to start app quickly
+- **Split Application into tabs. Landing Inspector and the new Flight Mapper
+- **Added Flight Mapping functionality
+- **TODO Implement flight track and ability to save flight track as KML/CSV/SHP/etc
+
+## Screenshot of MSFS Flight Mapper in action:
+
+![](images/Mapping_Tab.png)
 
 ## October 1, 2020: Update Version 1.1:
 - **Fixed -999999 values caused by low frame rates.**
@@ -32,7 +46,7 @@ Screenshot of MSFS Landing Inspector in action:
 
 ## Running MSFS Landing Inspector
 1. Start a flight in Microsoft Flight Simulator
-2. Download and unzip the MSFS Landing Inspector repository and run *msfs_landing_inspector.py* by double-clicking on it. This should launch a Command Prompt window. Don't close this window.
+2. Download and unzip the MSFS Landing Inspector repository and run *start.bat* by double-clicking on it. This should launch a Command Prompt window. Don't close this window.
 3. Open your browser and load the site *localhost:5000*. This should load up the MSFS Landing Inspector in your browser.
 
 ## Running MSFS Landing Inspector on your mobile device
