@@ -203,7 +203,7 @@
     var mymap;
     var marker;
     function loadMap(){
-      mymap = L.map('mapid',{zoomSnap: 0.01}).setView([0, 0], 13);
+      mymap = L.map('mapid',{zoomSnap: 0.1}).setView([0, 0], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
       var planeIcon= L.icon({iconUrl: 'static/img/plane.png', iconSize: [64,64], iconAnchor: [32, 32]})
       marker=L.marker([0, 0],{icon:planeIcon}).addTo(mymap)
@@ -232,24 +232,28 @@
     dist=data_simconnect.TARGET_DIST
     bearing=data_simconnect.BEARING
     //console.log(bearing);
-    zoom=17
-    if(gndAlt<250){zoom=17}
+    basezoom=17.5
+    zoom=basezoom-Math.log1p(gndAlt/10)
+/*     if(gndAlt<250){zoom=17}
     if(gndAlt>251&&gndAlt<500){zoom=16}
     if(gndAlt>501&&gndAlt<750){zoom=15}
     if(gndAlt>751&&gndAlt<1000){zoom=14}
-    if(gndAlt>2001&&gndAlt<3000){zoom=13}
-    if(gndAlt>3001&&gndAlt<5000){zoom=12}
+    if(gndAlt>1001&&gndAlt<2500){zoom=13}
+    if(gndAlt>2501&&gndAlt<5000){zoom=12}
     if(gndAlt>5001&&gndAlt<10000){zoom=11}
     if(gndAlt>10001&&gndAlt<15000){zoom=10}
     if(gndAlt>15001&&gndAlt<20000){zoom=8}
     if(gndAlt>20001&&gndAlt<25000){zoom=7}
     if(gndAlt>25001&&gndAlt<30000){zoom=6}
-    if(gndAlt>30001){zoom=5}  
+    if(gndAlt>30001){zoom=5} */  
     mymap.invalidateSize()
-    marker.setLatLng(new L.LatLng(lat,long))
+    mymap.flyTo(new L.LatLng(lat,long));
     mymap.setZoom(zoom)
+    marker.setLatLng(new L.LatLng(lat,long))
     marker.setRotationAngle(bearing)
-    mymap.panTo(new L.LatLng(lat,long));
+    //
+    
+    
    
     
    
