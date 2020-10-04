@@ -107,7 +107,7 @@ def simconnect_thread_func(threadname):
         
         lng  = aq.get("PLANE_LONGITUDE")
         if lng < -99999:
-            lng = lat_prev
+            lng = lng_prev
         else:
             lng_prev = lng
         
