@@ -40,6 +40,9 @@ def simconnect_thread_func(threadname):
     g_force_prev = 0
     v_speed_prev = 0
     plane_alt_above_ground_prev = 0
+    lat_prev = 0
+    long_prev = 0
+    bearing_prev = 0
     sim_on_ground_prev = 0
     v_speed_list_all = []
     g_force_list_all = []
@@ -89,20 +92,34 @@ def simconnect_thread_func(threadname):
         v_speed = round(aq.get("VELOCITY_WORLD_Y")*60)
         x_speed = aq.get("VELOCITY_WORLD_X")
         z_speed  = aq.get("VELOCITY_WORLD_Z")
-        lat  = aq.get("PLANE_LATITUDE")
-        lng  = aq.get("PLANE_LONGITUDE")
         alt  = aq.get("PLANE_ALTITUDE")
         gndAlt  = aq.get("PLANE_ALT_ABOVE_GROUND")
-        bearing = aq.get("PLANE_HEADING_DEGREES_TRUE")
         dist= aq.get("GPS_WP_DISTANCE")
-
         true_speed = (x_speed*x_speed)+(z_speed*z_speed)
         true_speed = round(math.sqrt(true_speed),2)
-        #print(true_speed)
+
+      
+        lat  = aq.get("PLANE_LATITUDE")
+        if lat < -99999:
+            lat = lat_prev
+        else:
+            lat_prev = lat
+        
+        lng  = aq.get("PLANE_LONGITUDE")
+        if lng < -99999:
+            lng = lat_prev
+        else:
+            lng_prev = lng
+        
+        bearing = aq.get("PLANE_HEADING_DEGREES_TRUE")
+        if bearing < -99999:
+            bearing = bearing_prev
+        else:
+            bearing_prev = bearing
+
         if v_speed < -99999:
             v_speed = v_speed_prev
         else:
-            #g_force_custom =  ((v_speed * 0.3048) - (v_speed_prev * 0.3048)) + 9.8 
             g_force_custom =  (round(aq.get("ACCELERATION_WORLD_Y")) / 32.2) + 1
             v_speed_prev = v_speed
 
