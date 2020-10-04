@@ -11,7 +11,7 @@ Flight mapping tool is in early development and may have bugs. Access by clickin
 - **Added Flight Mapping functionality
 - **TODO Implement flight track and ability to save flight track ask KML/CSV/etc
 
-**Screenshot of MSFS Flight Mapper in action:
+## Screenshot of MSFS Flight Mapper in action:
 
 ![](images/Mapping_Tab.png)
 
