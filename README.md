@@ -9,7 +9,7 @@ Flight mapping tool is in early development and may have bugs. Access by clickin
 - **Added Start.bat file to project to start app quickly
 - **Split Application into tabs. Landing Inspector and the new Flight Mapper
 - **Added Flight Mapping functionality
-- **TODO Implement flight track and ability to save flight track ask KML/CSV/etc
+- **TODO Implement flight track and ability to save flight track as KML/CSV/SHP/etc
 
 ## Screenshot of MSFS Flight Mapper in action:
 
