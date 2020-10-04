@@ -203,7 +203,7 @@
     var mymap;
     var marker;
     function loadMap(){
-      mymap = L.map('mapid',{zoomSnap: 0.01}).setView([0, 0], 13);
+      mymap = L.map('mapid',{zoomSnap: 0.1}).setView([0, 0], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
       var planeIcon= L.icon({iconUrl: 'static/img/plane.png', iconSize: [64,64], iconAnchor: [32, 32]})
       marker=L.marker([0, 0],{icon:planeIcon}).addTo(mymap)
@@ -232,7 +232,7 @@
     dist=data_simconnect.TARGET_DIST
     bearing=data_simconnect.BEARING
     //console.log(bearing);
-    basezoom=17.5
+    basezoom=17
     zoom=basezoom-Math.log1p(gndAlt/10)
 /*     if(gndAlt<250){zoom=17}
     if(gndAlt>251&&gndAlt<500){zoom=16}
