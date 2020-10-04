@@ -46,7 +46,7 @@ Screenshot of MSFS Landing Inspector in action:
 
 ## Running MSFS Landing Inspector
 1. Start a flight in Microsoft Flight Simulator
-2. Download and unzip the MSFS Landing Inspector repository and run *msfs_landing_inspector.py* by double-clicking on it. This should launch a Command Prompt window. Don't close this window.
+2. Download and unzip the MSFS Landing Inspector repository and run *start.bat* by double-clicking on it. This should launch a Command Prompt window. Don't close this window.
 3. Open your browser and load the site *localhost:5000*. This should load up the MSFS Landing Inspector in your browser.
 
 ## Running MSFS Landing Inspector on your mobile device
