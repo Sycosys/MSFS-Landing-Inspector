@@ -247,7 +247,7 @@
     if(gndAlt>25001&&gndAlt<30000){zoom=6}
     if(gndAlt>30001){zoom=5} */  
     mymap.invalidateSize()
-    mymap.flyTo(new L.LatLng(lat,long));
+    mymap.panTo(new L.LatLng(lat,long));
     mymap.setZoom(zoom)
     marker.setLatLng(new L.LatLng(lat,long))
     marker.setRotationAngle(bearing)
