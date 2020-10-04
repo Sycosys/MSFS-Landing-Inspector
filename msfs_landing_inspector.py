@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from SimConnect import *
 from threading import Thread
+import math
 
 simconnect_dict = {}
 
@@ -51,7 +52,12 @@ def simconnect_thread_func(threadname):
     sim_on_ground_list = [1,1,1,1,1,1,1,1]
     run_app = 1
     simconnect_dict["G_FORCE"] = 0
-    simconnect_dict["VERTICAL_SPEED"] = 0
+    simconnect_dict["VERTICAL_SPEED"] = 0.0
+    simconnect_dict["HORIZONTAL_SPEED"]=0.0
+    simconnect_dict["LATITUDE"]=0.0
+    simconnect_dict["LONGITUDE"]=0.0
+    simconnect_dict["PLANE_ALTITUDE"]=0.0
+    simconnect_dict["PLANE_BEARING"]=0.0
     simconnect_dict["SIM_ON_GROUND"] = 0
     simconnect_dict["G_FORCE_LANDING"] = "N/A"
     simconnect_dict["VERTICAL_SPEED_LANDING"] = "N/A"
@@ -81,6 +87,18 @@ def simconnect_thread_func(threadname):
         # Fix for -999999 values
         
         v_speed = round(aq.get("VELOCITY_WORLD_Y")*60)
+        x_speed = aq.get("VELOCITY_WORLD_X")
+        z_speed  = aq.get("VELOCITY_WORLD_Z")
+        lat  = aq.get("PLANE_LATITUDE")
+        lng  = aq.get("PLANE_LONGITUDE")
+        alt  = aq.get("PLANE_ALTITUDE")
+        gndAlt  = aq.get("PLANE_ALT_ABOVE_GROUND")
+        bearing = aq.get("PLANE_HEADING_DEGREES_TRUE")
+        dist= aq.get("GPS_WP_DISTANCE")
+
+        true_speed = (x_speed*x_speed)+(z_speed*z_speed)
+        true_speed = round(math.sqrt(true_speed),2)
+        #print(true_speed)
         if v_speed < -99999:
             v_speed = v_speed_prev
         else:
@@ -99,6 +117,7 @@ def simconnect_thread_func(threadname):
             plane_alt_above_ground = plane_alt_above_ground_prev
         else:
             plane_alt_above_ground_prev = plane_alt_above_ground
+
         
         sim_on_ground = aq.get("SIM_ON_GROUND")
         if sim_on_ground < -99999:
@@ -162,8 +181,15 @@ def simconnect_thread_func(threadname):
         # Populate vars to JSON dictionary
         simconnect_dict["G_FORCE"] = g_force
         simconnect_dict["VERTICAL_SPEED"] = v_speed
+        simconnect_dict["HORIZONTAL_SPEED"] = true_speed
+        simconnect_dict["LATITUDE"] = round(lat,7)
+        simconnect_dict["LONGITUDE"] = round(lng,7)
+        simconnect_dict["BEARING"] = math.degrees(bearing)
+        simconnect_dict["ALTITUDE"] = round(alt,1)
+        simconnect_dict["GND_ALTITUDE"] = round(plane_alt_above_ground,1)
         simconnect_dict["SIM_ON_GROUND"] = sim_on_ground
         simconnect_dict["AIRBORNE"] = airborne
+        simconnect_dict["TARGET_DIST"] = round(dist/1000,2)
         
         # Make landing/airborne decision
         if airborne == True and sum(sim_on_ground_list) == 30:

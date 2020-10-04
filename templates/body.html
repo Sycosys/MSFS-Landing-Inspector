@@ -1,498 +1,189 @@
 {% extends "head.html" %}
 {% block body %}
+<body onload="loadMap(); update_values();">
+  <div class="container-fluid">
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home"><h3> Landing Inspector |&nbsp;</h3</a></li>
+      <li><a data-toggle="tab" href="#map"><h3> Flight Map |&nbsp;</h3></a></li>
+    </ul>
+    <div class="tab-content" width=100%>
+      <div class="tab-pane fade in active" style="padding:10px 20px 0px 20px" id="home" >
+        <nav class="navbar" style="background: #1a1e34; width:100%; height:30px;">
+          <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Landing Inspector</a>
+        </nav>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Current Vertical Gs</h5>
+              <h3 class="card-title"><i class="tim-icons icon-planet text-primary"></i>  <span id="G_FORCE_Output">?</span></h3>
+              </div>
+            </div>
+          </div>
 
 
-<script type="text/javascript">
-// SimConnect Scripts
-var dummy = 1;
+          <div class="col-sm-3">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Current Vertical Speed (FPM)</h5>
+              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="VERTICAL_SPEED_Output">?</span></h3>
+              </div>
+            </div>
+          </div>
+      </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="card card-nav-tabs text-center">
+              <div class="card-body">
+              <p class="card-text"><<<<< LANDING DETAILS >>>>></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class = "row">
+          <div class="col-12">
+          <div class="alert alert-default" role="alert">
+          Landing Rating: <span id="LANDING_RATING_Output">N/A</span>
+          </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Touchdown Vertical Gs</h5>
+              <h3 class="card-title"><i class="tim-icons icon-planet text-primary"></i>  <span id="G_FORCE_LANDING_Output">N/A</span></h3>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Touchdown Vertical Speed (FPM)</h5>
+              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="VERTICAL_SPEED_LANDING_Output">N/A</span></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        
 
-var intervalID = setInterval(update_values,100);
-	
-function update_values() {
-	$.getJSON($SCRIPT_ROOT + '/_stuff',
-	
-  function (data_simconnect) {
-	$('#G_FORCE_Output').text(data_simconnect.G_FORCE)
-	$('#VERTICAL_SPEED_Output').text(data_simconnect.VERTICAL_SPEED)
-	$('#G_FORCE_LANDING_Output').text(data_simconnect.G_FORCE_LANDING)
-	$('#VERTICAL_SPEED_LANDING_Output').text(data_simconnect.VERTICAL_SPEED_LANDING)
-	$('#LANDING_RATING_Output').text(data_simconnect.LANDING_RATING)
-	
-	var empty_labels = data_simconnect.LABELS;
-	var list_landing_gs = data_simconnect.G_FORCE_LANDING_LIST;
-	var list_landing_vspeed = data_simconnect.VERTICAL_SPEED_LANDING_LIST;
-	var list_landing_alts = data_simconnect.PLANE_ALT_ABOVE_GROUND_LIST;
-	var list_landing_gs_ground = data_simconnect.G_FORCE_LANDING_LIST_GROUND
-	var list_landing_vspeed_ground = data_simconnect.VERTICAL_SPEED_LANDING_LIST_GROUND;
-	var list_landing_alts_ground = data_simconnect.PLANE_ALT_ABOVE_GROUND_LIST_GROUND;
-	var landing_rating = data_simconnect.LANDING_RATING;
-	var landing_counter = data_simconnect.LANDING_COUNTER;
-	
-	if (dummy <= landing_counter) {
-	
-	
-$(document).ready(function() {
-  // Javascript method's body can be found in assets/js/demos.js
-  demo.initDashboardPageCharts();
-
-});
-
-demo = {
-
-  initDashboardPageCharts: function() {
-
-// BEGINNING CHARTS 
-
-gradientChartOptionsConfigurationWithTooltipBlue = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
-      }
-    };
-
-    gradientChartOptionsConfigurationWithTooltipPurple = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(225,78,202,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
-      }
-    };
-
-	gradientChartOptionsConfigurationWithTooltipGreen = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(0,242,195,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
-      }
-    };
-    
-   
-
-/// Good Example ///
-
-    var chartGs = document.getElementById("chartLineGs").getContext("2d");
-
-    var data = {
-      labels: empty_labels,
-      datasets: [
-	  {
-		label: "Vertical Gs (on ground)",
-        fill: true,
-        borderColor: '#d245b3',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#d245b3',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#d245b3',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: list_landing_gs_ground,
-      }, 
-	  
-	  {
-				
-		label: "Vertical Gs (airborne)",
-        fill: true,
-        borderColor: '#a3a3a3',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#a3a3a3',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#a3a3a3',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: list_landing_gs,
-		
-	},]
-		
-	  
-    };
-
-    var myChart = new Chart(chartGs, {
-      type: 'line',
-      data: data,
-      options: gradientChartOptionsConfigurationWithTooltipPurple
-    });
-
-/// End of Good Example
+      <div class="row">
+        <div class="col">
+        <div class="card card-chart">
+          <div class="card-header">
+          <h3 class="card-category">Landing Vertical Gs</h3>
+          </div>
+          <div class="card-body">
+          <div class="chart-area">
+            <canvas id="chartLineGs"></canvas>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+        <div class="card card-chart">
+          <div class="card-header">
+          <h5 class="card-category">Landing Vertical Speed (FPM)</h5>
+          </div>
+          <div class="card-body">
+          <div class="chart-area">
+            <canvas id="chartLineVSpeed"></canvas>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
 
 
-/// Good Example ///
+      <div class="row">
+        <div class="col">
+        <div class="card card-chart">
+          <div class="card-header">
+          <h5 class="card-category">Altitude Above Ground (FTS)</h5>
+          </div>
+          <div class="card-body">
+          <div class="chart-area">
+            <canvas id="chartLineAlt"></canvas>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
 
-    var ctxVSpeed = document.getElementById("chartLineVSpeed").getContext("2d");
+    <p class="text-muted">
+    Notice: G force indicator is dependent on FPS and is less reliable than the vertical speed at the moment of touchdown.
+    </p>
+    <p>
+    version 1.1 | Created by <a href="https://www.caronstudios.net">Caron Studios s.r.o.</a>
+    </p>
+    <p>Support the development by donating <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CXDDYFUSWA2Z4&source=url">here.</a>
+    </p>
 
-    var data = {
-      labels: empty_labels,
-      datasets: [
-	  {
-		label: "Vertical Speed (on ground)",
-        fill: true,
-        borderColor: '#008dee',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#008dee',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#008dee',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: list_landing_vspeed_ground,
-      }, 
-	  
-	  {
-				
-		label: "Vertical Speed (airborne)",
-        fill: true,
-        borderColor: '#a3a3a3',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#a3a3a3',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#a3a3a3',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: list_landing_vspeed,
-		
-	},]
-		
-	  
-    };
-
-    var myChart = new Chart(ctxVSpeed, {
-      type: 'line',
-      data: data,
-      options: gradientChartOptionsConfigurationWithTooltipBlue
-    });
-
-/// End of Good Example
-
-/// Good Example ///
-
-    var ctxAlt = document.getElementById("chartLineAlt").getContext("2d");
-
-    var data = {
-      labels: empty_labels,
-      datasets: [
-	  {
-		label: "Altitude Above Ground (on ground)",
-        fill: true,
-        borderColor: '#00d6b6',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#00d6b6',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#00d6b6',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: list_landing_alts_ground,
-      }, 
-	  
-	  {
-				
-		label: "Altitude Above Ground (airborne)",
-        fill: true,
-        borderColor: '#a3a3a3',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#a3a3a3',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#a3a3a3',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: list_landing_alts,
-		
-	},]
-		
-	  
-    };
-
-    var myChart = new Chart(ctxAlt, {
-      type: 'line',
-      data: data,
-      options: gradientChartOptionsConfigurationWithTooltipGreen
-    });
-
-/// End of Good Example      
-
-// END CHARTS
-
-  },
-
-
-};
-		
-		
-		dummy = dummy + 1;
-		
-	}
-  });
-};
-
-</script>
-
-
-<body onload="update_values();">
-
-	<nav class="navbar" style="background: #1a1e34; width:100%; height:30px;">
-		<a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Landing Inspector</a>
-	</nav>
-	
-	
-	<div class="content" style="padding:10px 20px 0px 20px">
-	<!--div class="container"-->
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="card card-chart">
-					<div class="card-header">
-					<h5 class="card-category">Current Vertical Gs</h5>
-					<h3 class="card-title"><i class="tim-icons icon-planet text-primary"></i>  <span id="G_FORCE_Output">?</span></h3>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-6">
-				<div class="card card-chart">
-					<div class="card-header">
-					<h5 class="card-category">Current Vertical Speed (FPM)</h5>
-					<h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="VERTICAL_SPEED_Output">?</span></h3>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col">
-				<div class="card card-nav-tabs text-center">
-					<div class="card-body">
-					<p class="card-text"><<<<< LANDING DETAILS >>>>></p>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class = "row">
-			<div class="col-12">
-			<div class="alert alert-default" role="alert">
-			Landing Rating: <span id="LANDING_RATING_Output">N/A</span>
-			</div>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="card card-chart">
-					<div class="card-header">
-					<h5 class="card-category">Touchdown Vertical Gs</h5>
-					<h3 class="card-title"><i class="tim-icons icon-planet text-primary"></i>  <span id="G_FORCE_LANDING_Output">N/A</span></h3>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-6">
-				<div class="card card-chart">
-					<div class="card-header">
-					<h5 class="card-category">Touchdown Vertical Speed (FPM)</h5>
-					<h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="VERTICAL_SPEED_LANDING_Output">N/A</span></h3>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-
-	<div class="row">
-	  <div class="col">
-		<div class="card card-chart">
-		  <div class="card-header">
-			<h3 class="card-category">Landing Vertical Gs</h3>
-		  </div>
-		  <div class="card-body">
-			<div class="chart-area">
-			  <canvas id="chartLineGs"></canvas>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	<div class="row">
-	  <div class="col">
-		<div class="card card-chart">
-		  <div class="card-header">
-			<h5 class="card-category">Landing Vertical Speed (FPM)</h5>
-		  </div>
-		  <div class="card-body">
-			<div class="chart-area">
-			  <canvas id="chartLineVSpeed"></canvas>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="row">
-	  <div class="col">
-		<div class="card card-chart">
-		  <div class="card-header">
-			<h5 class="card-category">Altitude Above Ground (FTS)</h5>
-		  </div>
-		  <div class="card-body">
-			<div class="chart-area">
-			  <canvas id="chartLineAlt"></canvas>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-<p class="text-muted">
-Notice: G force indicator is dependent on FPS and is less reliable than the vertical speed at the moment of touchdown.
-</p>
-<p>
-version 1.1 | Created by <a href="https://www.caronstudios.net">Caron Studios s.r.o.</a>
-</p>
-<p>Support the development by donating <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CXDDYFUSWA2Z4&source=url">here.</a>
-</p>
-
-</div>
+      </div>
+      <div class="tab-pane fade" id="map">
+        <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Flight Mapper</a>
+        <div class="row">
+          <div style="height:75vh;" class="col-lg-12" id="mapid" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Current AirSpeed (kph)</h5>
+              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="HORIZONTAL_SPEED_Output">?</span></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Current Altitude ASL (feet)</h5>
+              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="ALTITUDE_Output">?</span></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Current Altitude AGL (feet)</h5>
+              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="GND_ALTITUDE_Output">?</span></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="card card-chart">
+              <div class="card-header">
+              <h5 class="card-category">Destination Distance Km</h5>
+              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="TARGET_DIST_Output">?</span></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h5 class="card-category">Current Position (lat/long)</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="LATITUDE_Output">?</span>,<span id="LONGITUDE_Output">?</span></h3>
+              </div>  
+            </div>
+          </div> 
+        </div>  
+      </div>
+    </div>
+  </div>
 
 <script>
-document.getElementById("G_FORCE_Output").innerHTML;
-document.getElementById("VERTICAL_SPEED_Output").innerHTML;
-document.getElementById("G_FORCE_LANDING_Output").innerHTML;
-document.getElementById("VERTICAL_SPEED_LANDING_Output").innerHTML;
-document.getElementById("LANDING_RATING_Output").innerHTML;
+  document.getElementById("G_FORCE_Output").innerHTML;
+  document.getElementById("VERTICAL_SPEED_Output").innerHTML;
+  document.getElementById("G_FORCE_LANDING_Output").innerHTML;
+  document.getElementById("VERTICAL_SPEED_LANDING_Output").innerHTML;
+  document.getElementById("LANDING_RATING_Output").innerHTML;
 </script>
 
 <!--   Core JS Files   -->
@@ -505,11 +196,404 @@ document.getElementById("LANDING_RATING_Output").innerHTML;
 <script src="/static/assets/js/plugins/chartjs.min.js"></script>
 <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="/static/assets/js/black-dashboard.min.js?v=1.0.0"></script>
-
-<script>
-
-
-</script>
-
+<script type="text/javascript">
+    // SimConnect Scripts
+    var dummy = 1;
+    var intervalID = setInterval(update_values,100);
+    var mymap;
+    var marker;
+    function loadMap(){
+      mymap = L.map('mapid',{zoomSnap: 0.01}).setView([0, 0], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+      var planeIcon= L.icon({iconUrl: 'static/img/plane.png', iconSize: [64,64], iconAnchor: [32, 32]})
+      marker=L.marker([0, 0],{icon:planeIcon}).addTo(mymap)
+      mymap.invalidateSize()
+    }
+    
+    function update_values() {
+    $.getJSON($SCRIPT_ROOT + '/_stuff',
+    
+    function (data_simconnect) {
+    $('#G_FORCE_Output').text(data_simconnect.G_FORCE)
+    $('#VERTICAL_SPEED_Output').text(data_simconnect.VERTICAL_SPEED)
+    $('#ALTITUDE_Output').text(data_simconnect.ALTITUDE)
+    $('#GND_ALTITUDE_Output').text(data_simconnect.GND_ALTITUDE)
+    $('#HORIZONTAL_SPEED_Output').text(data_simconnect.HORIZONTAL_SPEED)
+    $('#LATITUDE_Output').text(data_simconnect.LATITUDE)
+    $('#LONGITUDE_Output').text(data_simconnect.LONGITUDE)
+    $('#TARGET_DIST_Output').text(data_simconnect.TARGET_DIST)
+    $('#G_FORCE_LANDING_Output').text(data_simconnect.G_FORCE_LANDING)
+    $('#VERTICAL_SPEED_LANDING_Output').text(data_simconnect.VERTICAL_SPEED_LANDING)
+    $('#LANDING_RATING_Output').text(data_simconnect.LANDING_RATING)
+    lat=data_simconnect.LATITUDE
+    long=data_simconnect.LONGITUDE
+    gndAlt=data_simconnect.GND_ALTITUDE
+    seaAlt=data_simconnect.ALTITUDE
+    dist=data_simconnect.TARGET_DIST
+    bearing=data_simconnect.BEARING
+    //console.log(bearing);
+    zoom=17
+    if(gndAlt<250){zoom=17}
+    if(gndAlt>251&&gndAlt<500){zoom=16}
+    if(gndAlt>501&&gndAlt<750){zoom=15}
+    if(gndAlt>751&&gndAlt<1000){zoom=14}
+    if(gndAlt>2001&&gndAlt<3000){zoom=13}
+    if(gndAlt>3001&&gndAlt<5000){zoom=12}
+    if(gndAlt>5001&&gndAlt<10000){zoom=11}
+    if(gndAlt>10001&&gndAlt<15000){zoom=10}
+    if(gndAlt>15001&&gndAlt<20000){zoom=8}
+    if(gndAlt>20001&&gndAlt<25000){zoom=7}
+    if(gndAlt>25001&&gndAlt<30000){zoom=6}
+    if(gndAlt>30001){zoom=5}  
+    mymap.invalidateSize()
+    marker.setLatLng(new L.LatLng(lat,long))
+    mymap.setZoom(zoom)
+    marker.setRotationAngle(bearing)
+    mymap.panTo(new L.LatLng(lat,long));
+   
+    
+   
+    var empty_labels = data_simconnect.LABELS;
+    var list_landing_gs = data_simconnect.G_FORCE_LANDING_LIST;
+    var list_landing_vspeed = data_simconnect.VERTICAL_SPEED_LANDING_LIST;
+    var list_landing_alts = data_simconnect.PLANE_ALT_ABOVE_GROUND_LIST;
+    var list_landing_gs_ground = data_simconnect.G_FORCE_LANDING_LIST_GROUND
+    var list_landing_vspeed_ground = data_simconnect.VERTICAL_SPEED_LANDING_LIST_GROUND;
+    var list_landing_alts_ground = data_simconnect.PLANE_ALT_ABOVE_GROUND_LIST_GROUND;
+    var landing_rating = data_simconnect.LANDING_RATING;
+    var landing_counter = data_simconnect.LANDING_COUNTER;
+  
+    if (dummy <= landing_counter) {
+    
+    
+  $(document).ready(function() {
+    // Javascript method's body can be found in assets/js/demos.js
+    demo.initDashboardPageCharts();
+  
+  });
+  
+  demo = {
+  
+    initDashboardPageCharts: function() {
+  
+  // BEGINNING CHARTS 
+  
+  gradientChartOptionsConfigurationWithTooltipBlue = {
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+  
+        tooltips: {
+          backgroundColor: '#f5f5f5',
+          titleFontColor: '#333',
+          bodyFontColor: '#666',
+          bodySpacing: 4,
+          xPadding: 12,
+          mode: "nearest",
+          intersect: 0,
+          position: "nearest"
+        },
+        responsive: true,
+        scales: {
+          yAxes: [{
+            barPercentage: 1.6,
+            gridLines: {
+              drawBorder: false,
+              color: 'rgba(29,140,248,0.0)',
+              zeroLineColor: "transparent",
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9a9a9a"
+            }
+          }],
+  
+          xAxes: [{
+            barPercentage: 1.6,
+            gridLines: {
+              drawBorder: false,
+              color: 'rgba(29,140,248,0.1)',
+              zeroLineColor: "transparent",
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9a9a9a"
+            }
+          }]
+        }
+      };
+  
+      gradientChartOptionsConfigurationWithTooltipPurple = {
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+  
+        tooltips: {
+          backgroundColor: '#f5f5f5',
+          titleFontColor: '#333',
+          bodyFontColor: '#666',
+          bodySpacing: 4,
+          xPadding: 12,
+          mode: "nearest",
+          intersect: 0,
+          position: "nearest"
+        },
+        responsive: true,
+        scales: {
+          yAxes: [{
+            barPercentage: 1.6,
+            gridLines: {
+              drawBorder: false,
+              color: 'rgba(29,140,248,0.0)',
+              zeroLineColor: "transparent",
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9a9a9a"
+            }
+          }],
+  
+          xAxes: [{
+            barPercentage: 1.6,
+            gridLines: {
+              drawBorder: false,
+              color: 'rgba(225,78,202,0.1)',
+              zeroLineColor: "transparent",
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9a9a9a"
+            }
+          }]
+        }
+      };
+  
+    gradientChartOptionsConfigurationWithTooltipGreen = {
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+  
+        tooltips: {
+          backgroundColor: '#f5f5f5',
+          titleFontColor: '#333',
+          bodyFontColor: '#666',
+          bodySpacing: 4,
+          xPadding: 12,
+          mode: "nearest",
+          intersect: 0,
+          position: "nearest"
+        },
+        responsive: true,
+        scales: {
+          yAxes: [{
+            barPercentage: 1.6,
+            gridLines: {
+              drawBorder: false,
+              color: 'rgba(29,140,248,0.0)',
+              zeroLineColor: "transparent",
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9a9a9a"
+            }
+          }],
+  
+          xAxes: [{
+            barPercentage: 1.6,
+            gridLines: {
+              drawBorder: false,
+              color: 'rgba(0,242,195,0.1)',
+              zeroLineColor: "transparent",
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9a9a9a"
+            }
+          }]
+        }
+      };
+      
+     
+  
+  /// Good Example ///
+  
+      var chartGs = document.getElementById("chartLineGs").getContext("2d");
+  
+      var data = {
+        labels: empty_labels,
+        datasets: [
+      {
+      label: "Vertical Gs (on ground)",
+          fill: true,
+          borderColor: '#d245b3',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d245b3',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d245b3',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: list_landing_gs_ground,
+        }, 
+      
+      {
+          
+      label: "Vertical Gs (airborne)",
+          fill: true,
+          borderColor: '#a3a3a3',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#a3a3a3',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#a3a3a3',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: list_landing_gs,
+      
+    },]
+      
+      
+      };
+  
+      var myChart = new Chart(chartGs, {
+        type: 'line',
+        data: data,
+        options: gradientChartOptionsConfigurationWithTooltipPurple
+      });
+  
+  /// End of Good Example
+  
+  
+  /// Good Example ///
+  
+      var ctxVSpeed = document.getElementById("chartLineVSpeed").getContext("2d");
+  
+      var data = {
+        labels: empty_labels,
+        datasets: [
+      {
+      label: "Vertical Speed (on ground)",
+          fill: true,
+          borderColor: '#008dee',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#008dee',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#008dee',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: list_landing_vspeed_ground,
+        }, 
+      
+      {
+          
+      label: "Vertical Speed (airborne)",
+          fill: true,
+          borderColor: '#a3a3a3',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#a3a3a3',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#a3a3a3',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: list_landing_vspeed,
+      
+    },]
+      
+      
+      };
+  
+      var myChart = new Chart(ctxVSpeed, {
+        type: 'line',
+        data: data,
+        options: gradientChartOptionsConfigurationWithTooltipBlue
+      });
+  
+  /// End of Good Example
+  
+  /// Good Example ///
+  
+      var ctxAlt = document.getElementById("chartLineAlt").getContext("2d");
+  
+      var data = {
+        labels: empty_labels,
+        datasets: [
+      {
+      label: "Altitude Above Ground (on ground)",
+          fill: true,
+          borderColor: '#00d6b6',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#00d6b6',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#00d6b6',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: list_landing_alts_ground,
+        }, 
+      
+      {
+          
+      label: "Altitude Above Ground (airborne)",
+          fill: true,
+          borderColor: '#a3a3a3',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#a3a3a3',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#a3a3a3',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: list_landing_alts,
+      
+    },]
+      
+      
+      };
+  
+      var myChart = new Chart(ctxAlt, {
+        type: 'line',
+        data: data,
+        options: gradientChartOptionsConfigurationWithTooltipGreen
+      });
+  
+  /// End of Good Example      
+  
+  // END CHARTS
+  
+    },
+  
+  
+  };
+      
+      
+      dummy = dummy + 1;
+      
+    }
+    });
+  };
+  </script>
 </body>
 {% endblock %}
