@@ -61,11 +61,4 @@ Screenshot of MSFS Landing Inspector in action:
 
 ## Credits
 MSFS Landing Inspector uses the Python [SimConnect](https://pypi.org/project/SimConnect/) library and the CSS theme [Black Dashboard](https://www.creative-tim.com/product/black-dashboard) by [Creative Tim](https://www.creative-tim.com/) for the web front-end.
-
-## Donation
-If you like this tool and would like to support the development, please consider donating by clicking on the link below.
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CXDDYFUSWA2Z4&source=url)
-
-
-Happy landing!
+MSFS Flight uses leaflet
