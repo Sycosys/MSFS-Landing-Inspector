@@ -9,7 +9,7 @@ Flight mapping tool is in early development and may have bugs. Access by clickin
 - **Added Buttons to Enable to Disable Auto Panning and Auto Zooming in the map if desired. 
 - **Made some UI changes to make things a bit more user friendly
 
-![](images/Mapping-1.2.png)
+![](images/Mapping-1.2.PNG)
 
 
 ## October 4, 2020: Mapping Fork Version 1.11
