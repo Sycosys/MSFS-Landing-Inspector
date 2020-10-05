@@ -3,8 +3,8 @@
 <body onload="loadMap(); update_values();">
   <div class="container-fluid">
     <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#home"><h3> Landing Inspector |&nbsp;</h3</a></li>
-      <li><a data-toggle="tab" href="#map"><h3> Flight Map |&nbsp;</h3></a></li>
+      <li class="active"><a data-toggle="tab" href="#home"><h3 id="lndIns" onclick="swapSizes(0)"> Landing Inspector |&nbsp;</h3></a></li>
+      <li><a data-toggle="tab" href="#map"><h3 id=fltMap  onclick="swapSizes(1)"> Flight Map |&nbsp;</h3></a></li>
     </ul>
     <div class="tab-content" width=100%>
       <div class="tab-pane fade in active" style="padding:10px 20px 0px 20px" id="home" >
@@ -127,11 +127,10 @@
 
       </div>
       <div class="tab-pane fade" id="map">
-        <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Flight Mapper</a>
-        <div class="row">
-          <button type="button" id="toggleButton" class="btn btn-primary" onclick="zoomToggle();">Disable Autozoom</button>
-          <div style="height:75vh;" class="col-lg-12" id="mapid" >
-            
+        <button type="button" id="toggleZoom" class="btn btn-secondary" onclick="zoomToggle();">Disable Autozoom</button>
+        <button type="button" id="clearTrack" class="btn btn-info" onclick="clearTrack();">Clear Track</button>
+        <div class="row">   
+          <div style="height:75vh;" class="col-lg-12" id="mapid" >        
           </div>
         </div>
         <div class="row">
@@ -179,7 +178,20 @@
       </div>
     </div>
   </div>
+<script>
+  function swapSizes(x){
+    if (x==0){
+      document.getElementById("lndIns").style.fontSize = "xx-large";
+      document.getElementById("fltMap").style.fontSize = "x-large";
+    }
+    if (x==1){
+      document.getElementById("lndIns").style.fontSize = "x-large";
+      document.getElementById("fltMap").style.fontSize = "xx-large";
+    }
+    
 
+  }
+</script>
 <script>
   document.getElementById("G_FORCE_Output").innerHTML;
   document.getElementById("VERTICAL_SPEED_Output").innerHTML;
@@ -208,8 +220,9 @@
     var track=[]
     var zoomBool=true;
 
+
     function zoomToggle(){
-      var elm =document.getElementById("toggleButton");
+      var elm =document.getElementById("toggleZoom");
       if (zoomBool==true){
         zoomBool=false;
         elm.innerHTML = "Enable Autozoom";
@@ -220,7 +233,13 @@
       }
     }
 
+    function clearTrack(){
+      trackline.setLatLngs([])
+    }
+
     function loadMap(){
+      document.getElementById("lndIns").style.fontSize = "x-large";
+      document.getElementById("fltMap").style.fontSize = "x-large";
       mymap = L.map('mapid',{zoomSnap: 0.2}).setView([0, 0], 16);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
       var planeIcon= L.icon({iconUrl: 'static/img/plane.png', iconSize: [64,64], iconAnchor: [32, 32]})
