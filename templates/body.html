@@ -129,7 +129,7 @@
       <div class="tab-pane fade" id="map">
         <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Flight Mapper</a>
         <div class="row">
-          <button type="button" class="btn btn-primary" onclick="zoomToggle();">Disable Autozoom</button>
+          <button type="button" id="toggleButton" class="btn btn-primary" onclick="zoomToggle();">Disable Autozoom</button>
           <div style="height:75vh;" class="col-lg-12" id="mapid" >
             
           </div>
@@ -209,11 +209,14 @@
     var zoomBool=true;
 
     function zoomToggle(){
+      var elm =document.getElementById("toggleButton");
       if (zoomBool==true){
         zoomBool=false;
+        elm.innerHTML = "Enable Autozoom";
       }
       else{
         zoomBool=true;
+        elm.innerHTML = "Disable Autozoom";
       }
     }
 
