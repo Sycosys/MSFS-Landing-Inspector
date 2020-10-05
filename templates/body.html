@@ -129,7 +129,9 @@
       <div class="tab-pane fade" id="map">
         <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Flight Mapper</a>
         <div class="row">
+          <button type="button" class="btn btn-primary" onclick="zoomToggle();">Disable Autozoom</button>
           <div style="height:75vh;" class="col-lg-12" id="mapid" >
+            
           </div>
         </div>
         <div class="row">
@@ -202,11 +204,25 @@
     var intervalID = setInterval(update_values,100);
     var mymap;
     var marker;
+    var trackline
+    var track=[]
+    var zoomBool=true;
+
+    function zoomToggle(){
+      if (zoomBool==true){
+        zoomBool=false;
+      }
+      else{
+        zoomBool=true;
+      }
+    }
+
     function loadMap(){
-      mymap = L.map('mapid',{zoomSnap: 0.1}).setView([0, 0], 13);
+      mymap = L.map('mapid',{zoomSnap: 0.2}).setView([0, 0], 16);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
       var planeIcon= L.icon({iconUrl: 'static/img/plane.png', iconSize: [64,64], iconAnchor: [32, 32]})
       marker=L.marker([0, 0],{icon:planeIcon}).addTo(mymap)
+      trackline = L.polyline(track, {color: 'red'}).addTo(mymap);
       mymap.invalidateSize()
     }
     
@@ -219,8 +235,8 @@
     $('#ALTITUDE_Output').text(data_simconnect.ALTITUDE)
     $('#GND_ALTITUDE_Output').text(data_simconnect.GND_ALTITUDE)
     $('#HORIZONTAL_SPEED_Output').text(data_simconnect.HORIZONTAL_SPEED)
-    $('#LATITUDE_Output').text(data_simconnect.LATITUDE)
-    $('#LONGITUDE_Output').text(data_simconnect.LONGITUDE)
+    $('#LATITUDE_Output').text(data_simconnect.LATITUDE.toFixed(5))
+    $('#LONGITUDE_Output').text(data_simconnect.LONGITUDE.toFixed(5))
     $('#TARGET_DIST_Output').text(data_simconnect.TARGET_DIST)
     $('#G_FORCE_LANDING_Output').text(data_simconnect.G_FORCE_LANDING)
     $('#VERTICAL_SPEED_LANDING_Output').text(data_simconnect.VERTICAL_SPEED_LANDING)
@@ -231,23 +247,16 @@
     seaAlt=data_simconnect.ALTITUDE
     dist=data_simconnect.TARGET_DIST
     bearing=data_simconnect.BEARING
-    //console.log(bearing);
-    basezoom=17
-    zoom=basezoom-Math.log1p(gndAlt/10)
-    mymap.invalidateSize()
-
-
-    
-    marker.setLatLng(new L.LatLng(lat,long))
-    marker.setRotationAngle(bearing)
-    mymap.setZoom(zoom)
+    coordSet=[lat,long];
+    trackline.addLatLng(coordSet);
+    basezoom=17;
+    zoom=basezoom-Math.log1p(gndAlt/10);
+    mymap.invalidateSize();
+    marker.setLatLng(new L.LatLng(lat,long));
+    marker.setRotationAngle(bearing);
+    if(zoomBool==true){ mymap.setZoom(zoom);}
     mymap.panTo(new L.LatLng(lat,long));
-    //
-    
-    
-   
-    
-   
+
     var empty_labels = data_simconnect.LABELS;
     var list_landing_gs = data_simconnect.G_FORCE_LANDING_LIST;
     var list_landing_vspeed = data_simconnect.VERTICAL_SPEED_LANDING_LIST;

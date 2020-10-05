@@ -135,7 +135,6 @@ def simconnect_thread_func(threadname):
         else:
             plane_alt_above_ground_prev = plane_alt_above_ground
 
-        
         sim_on_ground = aq.get("SIM_ON_GROUND")
         if sim_on_ground < -99999:
             sim_on_ground = sim_on_ground_prev
