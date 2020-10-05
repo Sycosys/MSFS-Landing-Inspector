@@ -8,6 +8,7 @@ Flight mapping tool is in early development and may have bugs. Access by clickin
 - **Added Flight Track (and button to clear flight track)
 - **Added Buttons to Enable to Disable Auto Panning and Auto Zooming in the map if desired. 
 - **Made some UI changes to make things a bit more user friendly
+- **ToDo: Add abilty to save out a flight track with several flight variables in CSV/SHP/KML
 
 ![](images/Mapping-1.2.PNG)
 
