@@ -183,10 +183,14 @@
     if (x==0){
       document.getElementById("lndIns").style.fontSize = "xx-large";
       document.getElementById("fltMap").style.fontSize = "x-large";
+      document.getElementById("lndIns").style.color = '#66ffcc';
+      document.getElementById("fltMap").style.color = '#669999';
     }
     if (x==1){
       document.getElementById("lndIns").style.fontSize = "x-large";
       document.getElementById("fltMap").style.fontSize = "xx-large";
+      document.getElementById("fltMap").style.color = '#66ffcc';
+      document.getElementById("lndIns").style.color = '#669999';
     }
     
 
@@ -238,6 +242,8 @@
     }
 
     function loadMap(){
+      document.getElementById("lndIns").style.color = '#669999';
+      document.getElementById("fltMap").style.color = '#669999';
       document.getElementById("lndIns").style.fontSize = "x-large";
       document.getElementById("fltMap").style.fontSize = "x-large";
       mymap = L.map('mapid',{zoomSnap: 0.2}).setView([0, 0], 16);
