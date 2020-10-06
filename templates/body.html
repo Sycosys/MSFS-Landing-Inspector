@@ -23,6 +23,7 @@
  }
 </style>
   <div class="container-fluid">
+    <h3 id="ltlgdisp"><i class="tim-icons icon-send text-info"></i><span>Position </span><span id="LATITUDE_Output">?</span>, <span id="LONGITUDE_Output">?</span></h3>
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#home"><h3 id="lndIns" onclick="swapSizes(0)"> Landing Inspector |&nbsp;</h3></a></li>
       <li><a data-toggle="tab" href="#map"><h3 id=fltMap  onclick="swapSizes(1)"> Flight Map |&nbsp;</h3></a></li>
@@ -151,7 +152,7 @@
         <button type="button" id="toggleZoom" class="btn btn-secondary" onclick="zoomToggle();">Disable Autozoom</button>
         <button type="button" id="togglePan" class="btn btn-secondary" onclick="panToggle();">Disable Auto Pan</button>
         <button type="button" id="clearTrack" class="btn btn-info" onclick="clearTrack();">Clear Track</button>
-        <h3 id="ltlgdisp"><i class="tim-icons icon-send text-info"></i><span>Position </span><span id="LATITUDE_Output">?</span>, <span id="LONGITUDE_Output">?</span></h3>
+        
         <div class="row" id="bob">   
           <div class="col-md-10" id="mapid">      
           </div>
