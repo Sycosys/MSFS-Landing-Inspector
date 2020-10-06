@@ -10,7 +10,7 @@ Flight mapping tool is in early development and may have bugs. Access by clickin
 - **Made some UI changes to make things a bit more user friendly
 - **ToDo: Add abilty to save out a flight track with several flight variables in CSV/SHP/KML
 
-![](images/Mapping-1.2.PNG)
+![](images/Mapping-1_21.PNG)
 
 
 ## October 4, 2020: Mapping Fork Version 1.11
