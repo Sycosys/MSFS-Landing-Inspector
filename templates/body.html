@@ -23,7 +23,7 @@
  }
 </style>
   <div class="container-fluid">
-    <h3 id="ltlgdisp"><i class="tim-icons icon-send text-info"></i><span>Position </span><span id="LATITUDE_Output">?</span>, <span id="LONGITUDE_Output">?</span></h3>
+    <h4 id="ltlgdisp"></i><span>Position </span><span id="LATITUDE_Output">?</span>, <span id="LONGITUDE_Output">?</span></h4>
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#home"><h3 id="lndIns" onclick="swapSizes(0)"> Landing Inspector |&nbsp;</h3></a></li>
       <li><a data-toggle="tab" href="#map"><h3 id=fltMap  onclick="swapSizes(1)"> Flight Map |&nbsp;</h3></a></li>
@@ -160,32 +160,44 @@
             <div class="col-sm-12">
               <div class="card card-chart">
                 <div class="card-header">
-                <h5 class="card-category">Current AirSpeed (kph)</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="HORIZONTAL_SPEED_Output">?</span></h3>
+                <h5 class="card-category">Current AirSpeed</h5>
+                <h4 class="card-title"></i> True  <span id="HORIZONTAL_SPEED_Output">?</span></h4>
+                <h4 class="card-title"></i> Indic <span id="INDICATED_SPEED_Output">?</span></h4>
+                <h4 class="card-title"></i> Grnd <span id="GRND_SPEED_Output">?</span></h4>
+                <h4 class="card-title"></i> Mach <span id="MACH_SPEED_Output">?</span></h4>
                 </div>
               </div>
             </div>
             <div class="col-sm-12">
               <div class="card card-chart">
                 <div class="card-header">
-                <h5 class="card-category">Current Altitude ASL (feet)</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="ALTITUDE_Output">?</span></h3>
+                <h5 class="card-category">Current Altitude (feet)</h5>
+                <h4 class="card-title"></i> ASL  <span id="ALTITUDE_Output">?</span></h4>
+                <h4 class="card-title"></i> AGL <span id="GND_ALTITUDE_Output">?</span></h4>
                 </div>
               </div>
             </div>
             <div class="col-sm-12">
               <div class="card card-chart">
                 <div class="card-header">
-                <h5 class="card-category">Current Altitude AGL (feet)</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="GND_ALTITUDE_Output">?</span></h3>
+                <h5 class="card-category">Ground Elevation</h5>
+                <h4 class="card-title"></i><span id="GRND_ELEV_Output">?</span> ft</h4>
                 </div>
               </div>
             </div>
             <div class="col-sm-12">
               <div class="card card-chart">
                 <div class="card-header">
-                <h5 class="card-category">Destination Distance Km</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="TARGET_DIST_Output">?</span></h3>
+                <h5 class="card-category">Destination Distance</h5>
+                <h4 class="card-title"></i> NM <span id="TARGET_DIST_Output">?</span></h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="card card-chart">
+                <div class="card-header">
+                <h5 class="card-category">Max Gs</h5>
+                <h3 class="card-title"></i>  <span id="MAX_G_Output">?</span></h3>
                 </div>
               </div>
             </div>
@@ -290,10 +302,15 @@
     
     function (data_simconnect) {
     $('#G_FORCE_Output').text(data_simconnect.G_FORCE)
+    $('#MAX_G_Output').text(data_simconnect.MAX_G_FORCE)
     $('#VERTICAL_SPEED_Output').text(data_simconnect.VERTICAL_SPEED)
     $('#ALTITUDE_Output').text(data_simconnect.ALTITUDE)
     $('#GND_ALTITUDE_Output').text(data_simconnect.GND_ALTITUDE)
     $('#HORIZONTAL_SPEED_Output').text(data_simconnect.HORIZONTAL_SPEED)
+    $('#INDICATED_SPEED_Output').text(data_simconnect.INDICATED_SPEED)
+    $('#MACH_SPEED_Output').text(data_simconnect.MACH_SPEED)
+    $('#GRND_SPEED_Output').text(data_simconnect.GRND_SPEED)
+    $('#GRND_ELEV_Output').text(data_simconnect.GRND_ELEV)
     $('#LATITUDE_Output').text(data_simconnect.LATITUDE.toFixed(5))
     $('#LONGITUDE_Output').text(data_simconnect.LONGITUDE.toFixed(5))
     $('#TARGET_DIST_Output').text(data_simconnect.TARGET_DIST)

@@ -55,6 +55,7 @@ def simconnect_thread_func(threadname):
     sim_on_ground_list = [1,1,1,1,1,1,1,1]
     run_app = 1
     simconnect_dict["G_FORCE"] = 0
+    simconnect_dict["MAX_G_FORCE"] = 0
     simconnect_dict["VERTICAL_SPEED"] = 0.0
     simconnect_dict["HORIZONTAL_SPEED"]=0.0
     simconnect_dict["LATITUDE"]=0.0
@@ -91,15 +92,22 @@ def simconnect_thread_func(threadname):
             
         # Get Current Data 
         # Fix for -999999 values
+        max_g=round(aq.get("MAX_G_FORCE"),2)
         engine=aq.get("ENGINE_TYPE")
-        v_speed = round(aq.get("VELOCITY_WORLD_Y")*60)
-        x_speed = aq.get("VELOCITY_WORLD_X")
-        z_speed  = aq.get("VELOCITY_WORLD_Z")
+        v_speed = round(aq.get("VERTICAL_SPEED"),2)
+        z_speed = round(aq.get("VELOCITY_WORLD_Z"),3)
+        x_speed = round(aq.get("VELOCITY_WORLD_X"),3)
+
         alt  = aq.get("PLANE_ALTITUDE")
         gndAlt  = aq.get("PLANE_ALT_ABOVE_GROUND")
-        dist= aq.get("GPS_WP_DISTANCE")
-        true_speed = (x_speed*x_speed)+(z_speed*z_speed)
-        true_speed = round(math.sqrt(true_speed),2)
+        grnd_elv=round(alt-gndAlt,0)
+        dist= aq.get("GPS_WP_DISTANCE")*0.539957
+
+        grnd_speed = math.sqrt((z_speed*z_speed)+(x_speed*x_speed))*0.592484
+        grnd_speed= round(grnd_speed,2)
+        true_speed = round(aq.get("AIRSPEED_TRUE"),2)
+        indi_speed = round(aq.get("AIRSPEED_INDICATED"),2)
+        mach_speed = round(aq.get("AIRSPEED_MACH"),3)
 
       
         lat  = aq.get("PLANE_LATITUDE")
@@ -200,13 +208,18 @@ def simconnect_thread_func(threadname):
         # Populate vars to JSON dictionary
         simconnect_dict["ENGINE_TYPE"] = engine
         simconnect_dict["G_FORCE"] = g_force
+        simconnect_dict["MAX_G_FORCE"] = max_g
         simconnect_dict["VERTICAL_SPEED"] = v_speed
         simconnect_dict["HORIZONTAL_SPEED"] = true_speed
+        simconnect_dict["INDICATED_SPEED"] = indi_speed
+        simconnect_dict["MACH_SPEED"] = mach_speed
+        simconnect_dict["GRND_SPEED"] = grnd_speed
         simconnect_dict["LATITUDE"] = round(lat,7)
         simconnect_dict["LONGITUDE"] = round(lng,7)
         simconnect_dict["BEARING"] = math.degrees(bearing)
         simconnect_dict["ALTITUDE"] = round(alt,1)
         simconnect_dict["GND_ALTITUDE"] = round(plane_alt_above_ground,1)
+        simconnect_dict["GRND_ELEV"] = grnd_elv
         simconnect_dict["SIM_ON_GROUND"] = sim_on_ground
         simconnect_dict["AIRBORNE"] = airborne
         simconnect_dict["TARGET_DIST"] = round(dist/1000,2)
