@@ -1,15 +1,36 @@
 {% extends "head.html" %}
 {% block body %}
+
+
 <body onload="loadMap(); update_values();">
+<style>
+  #mapid {
+    
+  border: 3px solid black;
+  border-radius: 12px;
+  height: 85vh;  /* or as desired */
+  width: 80%;  /* This means "100% of the width of its container", the .col-md-8 */
+}
+#bob{
+  padding-left:15px;
+
+}
+ #ltlgdisp {
+        position: absolute; 
+        top: 10px;
+        right:10px;
+        z-index: 3;
+ }
+</style>
   <div class="container-fluid">
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#home"><h3 id="lndIns" onclick="swapSizes(0)"> Landing Inspector |&nbsp;</h3></a></li>
       <li><a data-toggle="tab" href="#map"><h3 id=fltMap  onclick="swapSizes(1)"> Flight Map |&nbsp;</h3></a></li>
     </ul>
-    <div class="tab-content" width=100%>
+    <div class="tab-content">
       <div class="tab-pane fade in active" style="padding:10px 20px 0px 20px" id="home" >
         <nav class="navbar" style="background: #1a1e34; width:100%; height:30px;">
-          <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#">MSFS Landing Inspector</a>
+          <a class="navbar-brand" style="position:relative; margin-top:-12px; margin-left:8px" href="#"></a>
         </nav>
         <div class="row">
           <div class="col-sm-3">
@@ -126,55 +147,48 @@
     </p>
 
       </div>
-      <div class="tab-pane fade" id="map">
+      <div class="tab-pane fade" id="map" >
         <button type="button" id="toggleZoom" class="btn btn-secondary" onclick="zoomToggle();">Disable Autozoom</button>
         <button type="button" id="togglePan" class="btn btn-secondary" onclick="panToggle();">Disable Auto Pan</button>
         <button type="button" id="clearTrack" class="btn btn-info" onclick="clearTrack();">Clear Track</button>
-        <div class="row">   
-          <div style="height:75vh;" class="col-lg-12" id="mapid" >        
+        <h3 id="ltlgdisp"><i class="tim-icons icon-send text-info"></i><span>Position </span><span id="LATITUDE_Output">?</span>, <span id="LONGITUDE_Output">?</span></h3>
+        <div class="row" id="bob">   
+          <div class="col-md-10" id="mapid">      
           </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-2">
-            <div class="card card-chart">
-              <div class="card-header">
-              <h5 class="card-category">Current AirSpeed (kph)</h5>
-              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="HORIZONTAL_SPEED_Output">?</span></h3>
+          <div class="col-md-2">
+            <div class="col-sm-12">
+              <div class="card card-chart">
+                <div class="card-header">
+                <h5 class="card-category">Current AirSpeed (kph)</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="HORIZONTAL_SPEED_Output">?</span></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="card card-chart">
+                <div class="card-header">
+                <h5 class="card-category">Current Altitude ASL (feet)</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="ALTITUDE_Output">?</span></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="card card-chart">
+                <div class="card-header">
+                <h5 class="card-category">Current Altitude AGL (feet)</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="GND_ALTITUDE_Output">?</span></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="card card-chart">
+                <div class="card-header">
+                <h5 class="card-category">Destination Distance Km</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="TARGET_DIST_Output">?</span></h3>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-sm-2">
-            <div class="card card-chart">
-              <div class="card-header">
-              <h5 class="card-category">Current Altitude ASL (feet)</h5>
-              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="ALTITUDE_Output">?</span></h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="card card-chart">
-              <div class="card-header">
-              <h5 class="card-category">Current Altitude AGL (feet)</h5>
-              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="GND_ALTITUDE_Output">?</span></h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="card card-chart">
-              <div class="card-header">
-              <h5 class="card-category">Destination Distance Km</h5>
-              <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="TARGET_DIST_Output">?</span></h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Current Position (lat/long)</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-info"></i>  <span id="LATITUDE_Output">?</span>,<span id="LONGITUDE_Output">?</span></h3>
-              </div>  
-            </div>
-          </div> 
         </div>  
       </div>
     </div>
@@ -193,8 +207,6 @@
       document.getElementById("fltMap").style.color = '#66ffcc';
       document.getElementById("lndIns").style.color = '#669999';
     }
-    
-
   }
 </script>
 <script>
@@ -222,7 +234,8 @@
     var mymap;
     var marker;
     var trackline
-    var track=[]
+    //[lat,long,bearing,seaAlt,gndAlt,vel,vs,throttle,fuel,onGround,etc?]
+    var trackData=[]
 
     var panBool=true
     var zoomBool=true;
@@ -252,9 +265,12 @@
     }
 
     function clearTrack(){
-      trackline.setLatLngs([])
+      trackline.setLatLngs([]);
     }
 
+    function saveTrack(){
+      //Must Do
+    }
     function loadMap(){
       document.getElementById("lndIns").style.color = '#669999';
       document.getElementById("fltMap").style.color = '#669999';
@@ -264,7 +280,7 @@
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
       var planeIcon= L.icon({iconUrl: 'static/img/plane.png', iconSize: [64,64], iconAnchor: [32, 32]})
       marker=L.marker([0, 0],{icon:planeIcon}).addTo(mymap)
-      trackline = L.polyline(track, {color: 'red'}).addTo(mymap);
+      trackline = L.polyline([], {color: 'red'}).addTo(mymap);
       mymap.invalidateSize()
     }
     
@@ -299,7 +315,7 @@
     if(zoomBool==true){ mymap.setZoom(zoom);}
     if(panBool==true){ mymap.panTo(new L.LatLng(lat,long));}
     
-
+    
     var empty_labels = data_simconnect.LABELS;
     var list_landing_gs = data_simconnect.G_FORCE_LANDING_LIST;
     var list_landing_vspeed = data_simconnect.VERTICAL_SPEED_LANDING_LIST;

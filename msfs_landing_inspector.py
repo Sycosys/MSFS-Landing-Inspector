@@ -41,7 +41,7 @@ def simconnect_thread_func(threadname):
     v_speed_prev = 0
     plane_alt_above_ground_prev = 0
     lat_prev = 0
-    long_prev = 0
+    lng_prev = 0
     bearing_prev = 0
     sim_on_ground_prev = 0
     v_speed_list_all = []
@@ -61,11 +61,14 @@ def simconnect_thread_func(threadname):
     simconnect_dict["LONGITUDE"]=0.0
     simconnect_dict["PLANE_ALTITUDE"]=0.0
     simconnect_dict["PLANE_BEARING"]=0.0
+    simconnect_dict["PLANE_PITCH_DEGREES"]=0.0
+    simconnect_dict["PLANE_BANK_DEGREES"]=0.0
     simconnect_dict["SIM_ON_GROUND"] = 0
     simconnect_dict["G_FORCE_LANDING"] = "N/A"
     simconnect_dict["VERTICAL_SPEED_LANDING"] = "N/A"
     simconnect_dict["SIM_ON_GROUND_LIST"] = "N/A"
     simconnect_dict["AIRBORNE"] = 0
+    simconnect_dict["ENGINE_TYPE"]=-1
     simconnect_dict["G_FORCE_LIST"] = g_force_list
     simconnect_dict["V_SPEED_LIST"] = v_speed_list
     simconnect_dict["G_FORCE_LANDING_LIST"] = "N/A"
@@ -88,7 +91,7 @@ def simconnect_thread_func(threadname):
             
         # Get Current Data 
         # Fix for -999999 values
-        
+        engine=aq.get("ENGINE_TYPE")
         v_speed = round(aq.get("VELOCITY_WORLD_Y")*60)
         x_speed = aq.get("VELOCITY_WORLD_X")
         z_speed  = aq.get("VELOCITY_WORLD_Z")
@@ -195,6 +198,7 @@ def simconnect_thread_func(threadname):
         
 
         # Populate vars to JSON dictionary
+        simconnect_dict["ENGINE_TYPE"] = engine
         simconnect_dict["G_FORCE"] = g_force
         simconnect_dict["VERTICAL_SPEED"] = v_speed
         simconnect_dict["HORIZONTAL_SPEED"] = true_speed
